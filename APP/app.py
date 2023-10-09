@@ -10,17 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mi_agenda.db'
 db.init_app(app)
 migrate = Migrate(app, db)
 
-@app.route("/")
-def index():
-    # Lógica para mostrar la lista de contactos
-    return "Lista de contactos"
 
-@app.route("/contacto/<int:id>")
-def mostrar_contacto(id):
-    # Lógica para mostrar un contacto específico
-    return f"Información del contacto {id}"
-
-@app.route('/contactos')
+@app.route('/')
 def listar_contactos():
     contactos = Contact.query.all()
     return render_template('listar_contactos.html', contactos=contactos)
@@ -29,6 +20,7 @@ def listar_contactos():
 def registrar_contacto():
     form = ContactoForm(request.form)
     if request.method == 'POST':
+        print(request.form)
         if form.validate_on_submit():
             # Crear un nuevo contacto
             nuevo_contacto = Contact(
@@ -38,7 +30,7 @@ def registrar_contacto():
             )
 
             # Crear teléfonos para el contacto
-            print(form.telefonos.data)
+            print(form.telefonos)
             telefonos = [Telefono(numero=telefono["numero"]) for telefono in form.telefonos.data]
             nuevo_contacto.telefonos = telefonos
 
@@ -58,6 +50,42 @@ def registrar_contacto():
             print(form.errors)
     return render_template('registrar_contacto.html', form=form)
 
+@app.route("/editar_contacto/<int:id>", methods=['GET', 'POST'])
+def editar_contacto(id):
+    contacto = Contact.query.get_or_404(id)
+    form = ContactoForm(obj=contacto)
+    print(form.validate_on_submit())
+    if form.validate_on_submit():
+        # Actualiza los datos del contacto según los cambios realizados en el formulario
+        form.populate_obj(contacto)
+        db.session.commit()
+        flash('El contacto se ha actualizado con éxito', 'success')
+        return redirect(url_for('listar_contactos'))
+    else:
+        # Imprimir los errores de validación para depuración
+        print(form.errors)
+    
+    return render_template('editar_contacto.html', form=form, contacto=contacto)
+
+@app.route('/eliminar_contacto/<int:id>', methods=['POST'])
+def eliminar_contacto(id):
+    contacto = Contact.query.get(id)
+    
+    # Eliminar todos los teléfonos asociados al contacto
+    for telefono in contacto.telefonos:
+        db.session.delete(telefono)
+    
+    # Luego eliminar los correos asociados al contacto
+    for correo in contacto.correos:
+        db.session.delete(correo)
+    
+    # Eliminar el contacto en sí
+    db.session.delete(contacto)
+    db.session.commit()
+    
+    flash('El contacto ha sido eliminado con éxito', 'success')
+    
+    return redirect(url_for('listar_contactos'))
 
 if __name__ == "__main__":
     with app.app_context():

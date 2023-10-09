@@ -47,6 +47,15 @@
                         {% endfor %}
                     </ul>
                 </td>
+                <td>
+                    <!-- Agregar un botón de eliminación -->
+                    <form method="POST" action="{{ url_for('eliminar_contacto', id=contacto.id) }}">
+                    
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                    <!-- Agregar un enlace para editar (opcional) -->
+                    <a href="{{ url_for('editar_contacto', id=contacto.id) }}" class="btn btn-primary">Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

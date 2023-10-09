@@ -6,17 +6,6 @@
     <title>Registrar Contacto</title>
 </head>
 <body>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
     <h1>Registrar Contacto</h1>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -34,26 +23,61 @@
         </div>
         <div>
             <h2>Teléfonos</h2>
-            {% for telefono in form.telefonos %}
-            <div>
-                {{ telefono.label }}
-                {{ telefono }}
+            <div id="telefonos-container">
+                {% for telefono in form.telefonos %}
+                <div class="telefono-item">
+                    {{ telefono }}
+                    <button type="button" class="eliminar-telefono">Eliminar Teléfono</button>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <button type="button" id="agregar-telefono">Agregar Teléfono</button>
         </div>
         <div>
             <h2>Correos Electrónicos</h2>
-            {% for correo in form.correos %}
-            <div>
-                {{ correo.label }}
-                {{ correo }}
+            <div id="correo-container">
+                {% for correo in form.correos %}
+                <div class="correo-item">
+                    {{ correo }}
+                    <button type="button" class="eliminar-correo">Eliminar Correo</button>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <button type="button" id="agregar-correo">Agregar Correo</button>
         </div>
         <div>
             {{ form.submit() }}
         </div>
     </form>
 
+    <script>
+        // Código JavaScript para agregar y eliminar campos de teléfonos y correos electrónicos
+        document.getElementById('agregar-telefono').addEventListener('click', function () {
+            var telefonoItem = document.createElement('div');
+            telefonoItem.className = 'telefono-item';
+            telefonoItem.innerHTML = `
+                {{ form.telefonos }}
+                <button type="button" class="eliminar-telefono">Eliminar Teléfono</button>`;
+            document.getElementById('telefonos-container').appendChild(telefonoItem);
+        });
+
+        document.getElementById('agregar-correo').addEventListener('click', function () {
+            var correoItem = document.createElement('div');
+            correoItem.className = 'correo-item';
+            correoItem.innerHTML = `
+                {{ form.correos.direccion}}
+                <button type="button" class="eliminar-correo">Eliminar Correo</button>`;
+            document.getElementById('correo-container').appendChild(correoItem);
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('eliminar-telefono')) {
+                event.target.parentElement.remove();
+            }
+            if (event.target.classList.contains('eliminar-correo')) {
+                event.target.parentElement.remove();
+            }
+        });
+    </script>
 </body>
 </html>
