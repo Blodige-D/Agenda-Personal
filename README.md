@@ -12,7 +12,9 @@ La aplicación está construida utilizando Python y Flask. Hace uso de una base 
 ## Instrucciones de Instalación:
 - Descargar el codigo
 - Ejecutar el siguiente comando pip install -r requirements.txt
-- 
+- Ejecutar el comando venv\Scripts\activate
+- Ejecutar cd \Procfile
+- Ejecutar flask run
 
 ## Stack Tecnológico:
 - Python 3.8.
