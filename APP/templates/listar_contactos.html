@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Contactos</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h1>Lista de Contactos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Número de Documento</th>
+                <th>Dirección</th>
+                <th>Teléfonos</th>
+                <th>Correos Electrónicos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contacto in contactos %}
+            <tr>
+                <td>{{ contacto.nombre_completo }}</td>
+                <td>{{ contacto.numero_documento }}</td>
+                <td>{{ contacto.direccion }}</td>
+                <td>
+                    <ul>
+                        {% for telefono in contacto.telefonos %}
+                        <li>{{ telefono.numero }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for correo in contacto.correos %}
+                        <li>{{ correo.direccion }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('registrar_contacto') }}">Registrar Nuevo Contacto</a>
+</body>
+</html>

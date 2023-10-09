@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Contacto</title>
+</head>
+<body>
+    <h1>Información del Contacto</h1>
+    <ul>
+        <li><strong>Nombre:</strong> {{ contacto.nombre_completo }}</li>
+        <li><strong>Número de Documento:</strong> {{ contacto.numero_documento }}</li>
+        <li><strong>Dirección:</strong> {{ contacto.direccion }}</li>
+        <li><strong>Teléfonos:</strong>
+            <ul>
+                {% for telefono in contacto.telefonos %}
+                <li>{{ telefono.numero }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li><strong>Correos Electrónicos:</strong>
+            <ul>
+                {% for correo in contacto.correos %}
+                <li>{{ correo.direccion }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
