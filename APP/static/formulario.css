@@ -1,0 +1,81 @@
+/* Estilos para el formulario */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+div {
+    margin-bottom: 15px;
+}
+
+/* Estilos para los campos de entrada */
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos para los títulos de sección */
+h2 {
+    font-size: 18px;
+    color: #007bff;
+    margin-top: 20px;
+}
+
+/* Estilos para los botones */
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para los elementos de teléfono y correo */
+.telefono-item,
+.correo-item {
+    display: flex;
+    align-items: center;
+}
+
+.eliminar-telefono,
+.eliminar-correo {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.eliminar-telefono:hover,
+.eliminar-correo:hover {
+    background-color: #c82333;
+}

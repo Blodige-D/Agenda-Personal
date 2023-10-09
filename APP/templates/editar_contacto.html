@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Contacto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='formulario.css') }}">
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h1>Editar Contacto</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.nombre_completo.label }}
+            {{ form.nombre_completo }}
+        </div>
+        <div>
+            {{ form.numero_documento.label }}
+            {{ form.numero_documento }}
+        </div>
+        <div>
+            {{ form.direccion.label }}
+            {{ form.direccion }}
+        </div>
+        <div>
+            <h2>Teléfonos</h2>
+            {% for telefono in form.telefonos %}
+            <div>
+                {{ telefono.label }}
+                {{ telefono }}
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <h2>Correos Electrónicos</h2>
+            {% for correo in form.correos %}
+            <div>
+                {{ correo.label }}
+                {{ correo }}
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+
+</body>
+</html>

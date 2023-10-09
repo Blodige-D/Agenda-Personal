@@ -7,6 +7,7 @@ from forms import ContactoForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sED$GG^W&gscpSH&46PPKiAJbq62Kf'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mi_agenda.db'
+app.config['STATIC_FOLDER'] = 'static'
 db.init_app(app)
 migrate = Migrate(app, db)
 
